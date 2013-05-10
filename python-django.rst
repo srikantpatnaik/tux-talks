@@ -52,6 +52,10 @@ Setting mysql
 
 	pip install MySQL-python
 
+#. For web2py install *pymysql* in virtualenv ::
+
+	pip install pymysql
+
 #. Now change appropriate fields in *settings.py* to make your django work with mysql
 
 
@@ -66,6 +70,14 @@ Useful mysql commands for debugging
 
 	show databases;
 
+#. To create new user and grant permission to database ::
+
+	GRANT ALL ON <database>.* TO <user>@localhost IDENTIFIED BY '<password>';
+
+#. To create a new database ::
+
+	CREATE DATABASE <database-name>;
+
 #. To load/use certain database from list ::
 
 	use <database>;
@@ -76,12 +88,22 @@ Useful mysql commands for debugging
 
 #. To view particular table contents ::
 
-	select * <table-name>;
+	select * from <table-name>;
 
 #. To view description of a table ::
 
 	desc <table-name>;
 
+#. To delete a table ::
+
+	drop table <table-name>
+
+#. To list all users in mysql ::
+
+	select User from mysql.user
+
+.. note::
+	You need to drop table if you have changed the name in the models.py file.
 
 A simple example (Adding two numbers using a form)
 --------------------------------------------------
