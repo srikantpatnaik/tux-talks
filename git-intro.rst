@@ -462,6 +462,10 @@ Steps to follow:
    This will print all commits and respective commit messages, with latest
    commit at top. 
 
+   To view all commits on master branch do ::
+
+		git log master
+
 #. To revert to previous version, one can track through commit message. See that's
    why commit message is important. In our case it says `Added README.rst file
    with instructions to compile and execute`.
