@@ -13,8 +13,7 @@ VERSION CONTROL
 
 .. footer::
    
-   Page: ###Page###/###Total###,
-   Android workshop, Saturday 2nd March 2013, IIT Bombay 
+   Page: ###Page###/###Total###, Android workshop, Saturday 2nd March 2013, IIT Bombay 
 
 
 Version control, also known as revision control or source control, is the
@@ -477,13 +476,12 @@ Steps to follow:
 
    This will reset repository head to first commit(i.e one with README.rst only).
 
-#. Alternate to `git reset`, one can also do `git checkout`, which sometimes considered more
-   safe::
+#. Alternate to `git reset`, one can also do `git checkout`, which sometimes considered more safe ::
 
 		git checkout 8bfd59e
 
-	If you have modified files in the repo and you don't want to commit them, then checkout will not
-    take place. You need need to manually `stash` the changes before `checkout` ::
+   If you have modified files in the repo and you don't want to commit them, then checkout will not
+   take place. You need need to manually `stash` the changes before `checkout` ::
 
 		git stash
 
