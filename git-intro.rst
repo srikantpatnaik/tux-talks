@@ -446,8 +446,8 @@ merge
 |
 |
  
-reset
-^^^^^
+checkout and reset
+^^^^^^^^^^^^^^^^^^
 
 In many situations, you might want to revert  to a particular version.
 Let's try reverting our repository where we had only README.rst file(i.e
@@ -476,6 +476,16 @@ Steps to follow:
 		git reset --hard 8bfd59e
 
    This will reset repository head to first commit(i.e one with README.rst only).
+
+#. Alternate to `git reset`, one can also do `git checkout`, which sometimes considered more
+   safe::
+
+		git checkout 8bfd59e
+
+	If you have modified files in the repo and you don't want to commit them, then checkout will not
+    take place. You need need to manually `stash` the changes before `checkout` ::
+
+		git stash
 
 #. Now `git log` will simply show the head at 8bfd59e (minimum first 7 digits 
    of hash are required to represent commit) ::
