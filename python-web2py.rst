@@ -97,6 +97,14 @@ Useful mysql commands for debugging
 
 	drop table <table-name>
 
+#. To delete one row from table ::
+
+	delete from  complaint where id=1;
+
+#. To delete all rows from table::
+
+	delete from complaint;
+		
 #. To list all users in mysql ::
 
 	select User from mysql.user
