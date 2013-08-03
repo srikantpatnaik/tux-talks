@@ -107,31 +107,73 @@ Bash Handout
 
 .. L25
 
+**mkdir sed; cd sed;**
+**for i in {1..1000}; do shuf -n 10 /var/log/dmesg -o $i.txt;done**
+
+``#create text files with shuffled data, to practice 'sed' command``
+
+.. L26
+
+**sed 's/\\[//g' 1.txt**  ``#replace '[' with empty string``
+
+.. L27
+
+**sed 's/\\[//g' -i.orig {1..1000}.txt** 
+
+``#replace '[' with empty string in place, create backup files with .orig
+extension, repeat for all 1000 files``
+
+.. L28
+
+**sed 's/\\ *[0-9]*\\.[0-9]*\\]//g' -i {1..1000}.txt**
+
+``#delete remaining pattern, without backup files``
+
+``eg:'    10.405270]' -->  \ *[0-9]*\.[0-9]*\]``
+
+.. L29
+
+**sed '1i He was here & HERE on top of every page' -i {1..1000}.txt**
+
+``Add text following '1i', '1' is the line number``
+
+.. L30
+
+**sed 's/\\<here\\>/\*\*\*\*/gi' -i {1..1000}.txt**
+
+``Replace 'here' & 'HERE' with '****', 'gi' stands for global and
+ignore case``
+
+.. L31
+
+**alias rm='rm -i'** ``#add alias in ~/.bashrc to make it persistent``
 
 
+.. L32
 
+**export $PATH=$PATH:/tmp/bin** 
 
+``#add custom executable path, may append in ~/.bashrc``
 
+.. L33
 
+**export PS1="[\d \t \u@\h:\w ] $ "**
 
+``#add custom bash prompt, may append in ~/.bashrc``
 
+.. L34
 
+**export http_proxy="http://username:password@host:port/"**
 
+``#set proxy in terminal, do for https_proxy & ftp_proxy too, may append
+in ~/.bashrc``
 
+.. L35
 
+**export no_proxy=10.0.0.0/8,localhost,*iitb.ac.in,127.0.0.1**
+``#no proxy is for internal sites, may append in ~/.bashrc``
 
-
-
-
-
-
-
-
-
-
-
-
-
+**wget -c **
 
 
 
