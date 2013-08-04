@@ -141,13 +141,17 @@ extension, repeat for all 1000 files``
 
 **sed 's/\\<here\\>/\*\*\*\*/gi' -i {1..1000}.txt**
 
-``Replace 'here' & 'HERE' with '****', 'gi' stands for global and
-ignore case``
+``Replace 'here' & 'HERE' with '****', 'gi' is global & ignore case``
+
+.. L46
+
+**sed -n '/was/,/ugly UGLY/p' 1.txt > results.txt**
+
+``Print lines between patterns``
 
 .. L31
 
 **alias rm='rm -i'** ``#add alias in ~/.bashrc to make it persistent``
-
 
 .. L32
 
@@ -170,10 +174,98 @@ in ~/.bashrc``
 
 .. L35
 
-**export no_proxy=10.0.0.0/8,localhost,*iitb.ac.in,127.0.0.1**
+**export no_proxy=10.0.0.0/8,localhost,*.iitb.ac.in,127.0.0.1**
+
 ``#no proxy is for internal sites, may append in ~/.bashrc``
 
-**wget -c **
+.. L36
+
+**wget -c http://ftp.gnu.org/gnu/wget/wget-1.14.tar.xz**
+
+``# '-c' Continue getting a partially-downloaded file``
+
+.. L37
+
+**wget -nd -P images/ -r -A.png http://matplotlib.org/gallery.html**
+
+``# Download png files to *images* directory recursively``
+
+.. L38
+
+**ifconfig -a** ``#will list all the network interfaces and their status``
+
+.. L45
+
+**nmcli dev wifi connect <name> password <password>** ``#connect to wifi``
+
+.. L39
+
+**df -h**  ``#will list all filesystem disk space usage``
+
+.. L40
+
+**du -sh ~** 
+
+``#estimate file space usage, '-sh' is summarize & human-readable``
+
+.. L41
+
+**wc -lwm /etc/passwd**
+
+``#print number of lines, word, and char of file``
+
+.. L42
+
+**ssh -X root@localhost**
+
+``#get secure shell access of remote machine, '-X' enables X11``
+
+.. L43
+
+**scp -r /etc/udev root@localhost:/tmp**
+
+``#secure copy to remote machine recursively``
+
+.. L44
+
+**tar -cvzf archive.tgz *.txt** ``#create compressed archive``
+
+.. R1
+
+**tar -xvzf archive.tgz** ``#extract to pwd(present working directory)``
+
+.. R2
+
+**zip allfiles.zip *.txt** ``#create a zip file``
+
+.. R3
+
+**unzip allfiles.zip** ``#unzip to pwd``
+
+.. R4
+
+**echo "hi" 1>so1; ls -z 1>so2** ``#redirect STDOUT stream to files``
+
+.. R5
+
+**echo "hi" 2>se1; ls -z 2>se2** ``#redirect STDERR stream to files``
+
+.. R6
+
+**mogrify -resize 50% -format jpg images/*.png** ``#convert all png to jpg``
+
+.. R7
+
+**ln -s images/ ~/Desktop** ``#create shortcut to Desktop``
+
+.. R8
+
+**unlink ~/Desktop/images** ``#remove shortcut``
+
+
+
+
+
 
 
 
