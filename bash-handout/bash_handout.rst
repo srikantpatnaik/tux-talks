@@ -145,7 +145,7 @@ Bash Handout
 
 .. L34
 
-**export PS1="[\d \t \u@\h:\w ] $ "** ``#add custom bash prompt``
+**export PS1="[\\d \\t \\u@\\h:\\w ] $ "** ``#add custom bash prompt``
 
 .. L35
 
