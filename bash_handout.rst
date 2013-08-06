@@ -48,7 +48,7 @@ Bash Handout
 
 .. L12
 
-**find ~/Downloads -iname *.pdf -size +4M** ``#find files larger than 4MB``
+**find ~/Downloads -iname \\*.pdf -size +4M** ``#find files larger than 4MB``
 
 .. L13
 
@@ -143,11 +143,9 @@ extension, repeat for all 1000 files``
 
 ``Replace 'here' & 'HERE' with '****', 'gi' is global & ignore case``
 
-.. L46
+.. R9
 
-**sed -n '/was/,/ugly UGLY/p' 1.txt > results.txt**
-
-``Print lines between patterns``
+**sed -n '/was/,/ugly UGLY/p' 1.txt >pat.txt** ``#Print lines between pattern``
 
 .. L31
 
@@ -155,7 +153,7 @@ extension, repeat for all 1000 files``
 
 .. L32
 
-**export $PATH=$PATH:/tmp/bin** 
+**export $PATH=PATH:/tmp/bin** 
 
 ``#add custom executable path, may append in ~/.bashrc``
 
@@ -194,7 +192,7 @@ in ~/.bashrc``
 
 **ifconfig -a** ``#will list all the network interfaces and their status``
 
-.. L45
+.. R10
 
 **nmcli dev wifi connect <name> password <password>** ``#connect to wifi``
 
@@ -261,6 +259,144 @@ in ~/.bashrc``
 .. R8
 
 **unlink ~/Desktop/images** ``#remove shortcut``
+
+.. R10
+
+**cat 1.csv | awk {'print $1 + $2'} | paste  -d ',' 1.csv - > sum.csv**
+
+``#sum first two column and create a third one, write to sum.csv``
+
+.. R11
+
+**find /tmp/ -depth -name "* *" -execdir rename 's/ /_/g' "{}" \;**
+
+``#remove all white space from dirs & files recursively``
+
+.. R12
+
+**scp file.pdf root@localhost:;ssh root@localhost 'lp file.pdf'**
+
+``#copy file to remote machine and print``
+
+.. R13
+
+**touch 1.txt** ``#create a file of zero size``
+
+.. R14
+
+**which ls**  ``#return path of *ls* command``
+
+.. R15
+
+**rm -i `find ~/Downloads -iname \*.pdf -size +16M`**
+
+``#execute find to get pdf files >16M and remove them``
+
+.. R16
+
+**whoami** ``#will return present user``
+
+.. R17
+
+**for i in {1..10}; do echo The number is $i; done**
+
+``#Add command in a txt file to make a bash script``
+
+.. R18
+
+**if [ -f /etc/bash.bashrc ]; then echo File exists; fi**
+
+``#check for existence of file``
+
+.. R20
+
+**while :;do echo Infinite loop [hit CTRL+c to stop];done**
+
+``#simple while loop``
+
+.. R21
+
+**w** ``#show logged in users and their activity``
+
+.. R22
+
+**kill -15 `pgrep firefox`** ``#kill firefox``
+
+.. R23
+
+**passwd <user>** ``#update password``
+
+.. R24
+
+**shuf -n 10 /var/log/syslog -o random.txt**``**
+
+``#create file with shuffled lines``
+
+.. R25
+
+**diff -y 1.txt 2.txt** ``#show difference of two files``
+
+.. R26 
+
+**cmp 1.txt 2.txt** ``#compare two files byte by byte``
+
+
+.. R27
+
+**cat 1.txt| tr a-z A-Z** ``#convert to uppercase``
+
+.. R28
+
+**top** ``#will show system monitor``
+
+.. R29
+
+**last** ``#show listing of last logged in users``
+
+.. R30
+
+**ping -c 5 127.0.0.1** ``#check networking connectivity``
+
+.. R31
+
+**free -m**  ``#show memory(RAM) usage``
+
+.. R32
+
+**pdftk A=in.pdf cat A8-12 output new.pdf**
+
+ ``#extract page 8 to 12 from *in.pdf*``
+
+.. R33
+
+**pdftk 1.pdf 2.pdf cat output 1_plus_2.pdf** ``#add two pdf files``
+
+
+.. R19
+
+**mutt -a <file-to-be-attached> -s <subject> <email>**
+
+``#wait for content to be typed in an editor``
+
+.. R20
+
+**cat <content-of-email> | mutt -a <file> -s <sub> <email>**
+
+``#non interactive``
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
