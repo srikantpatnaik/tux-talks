@@ -19,7 +19,9 @@ Next, run the bash script to generate pdf file ::
    bash convert.sh
 
 
-NOTE: Do not expect `bash_handout.rst` to render properly on github, it has an custom non standard syntax. The ``two_column.py`` will parse that file and generate the actual rst file. 
+NOTE:
+
+Do not expect ``bash_handout.rst`` to render properly on github, it has an custom non standard syntax. The ``two_column.py`` will parse that file and generate the actual rst file. 
 
 
 CREDITS
