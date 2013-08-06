@@ -141,7 +141,7 @@ Bash Handout
 
 .. L33
 
-**export $PATH=PATH:/tmp/bin** ``#add custom executable path``
+**export PATH=$PATH:/tmp/bin** ``#add custom executable path``
 
 .. L34
 
