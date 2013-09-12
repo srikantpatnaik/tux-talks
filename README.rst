@@ -4,8 +4,8 @@ README
 This repository hosts documentation for various GNU/Linux tools. It
 is an attempt to have a portal with concise information for all.
 
-Content
--------
+List of topics
+--------------
 
 #. `Advanced Android Debugging <https://github.com/srikantpatnaik/tux-talks/blob/master/adb-and-busybox.rst>`_
 
@@ -17,5 +17,8 @@ Content
 
 #. `Embedded Linux <https://github.com/srikantpatnaik/tux-talks/blob/master/embedded-linux.rst>`_
 
+
+The rest of `rst` files are under development. To contribute, please fork and 
+send me pull request. 
 
 
