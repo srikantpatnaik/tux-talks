@@ -102,7 +102,6 @@ A13-OLINUXINO     Allwinner A-13(Aakash), Cortex-A8, 1           47$
 ==============   ======================================     ===================   
 
 |
-|
 
 **Companies using ARM architecture**
 
@@ -125,6 +124,46 @@ TI                 Omap 3              Barnes and Noble Nook Color              
 TI                 Omap 4              KindleFire,GalaxyTab 2,Blackberry Playbook        Cortex-A9, 2
 TI                 Omap 5              NA                                                Cortex-A15, 2 
 ==============   ==================   =============================================  ======================
+
+Boot sequence in Linux
+----------------------
+
+The steps involved in Linux boot process (x86 and ARM) :
+
+
+1. **BIOS (assembly & C)** - is the first program run by x86 based motherboard. ARM boards do 
+   not have BIOS, but each SoC has its own program to verify the on-board peripherals 
+   after power on. 
+
+   This BIOS equivalent program in EL is mostly hardcoded in SoCs, hence updating them
+   is usually not possible in case of embedded devices. 
+
+   The purpose of this stage is to check the integrety of peripherals connected,
+   if found OK, it will look for `bootloader` application in first boot-able device.
+   
+
+#. **Bootloader (C & assembly)** - is used to copy and uncompress *kernel* to RAM from a given 
+   location. GRUB(GRand Unified Bootloader) is the popular bootloader for desktop 
+   Linux machines. 
+
+   Embedded Linux use `U-Boot <http://www.denx.de/wiki/U-Boot/>`_ bootloader.
+
+   The purpose of this stage is to hand over hardware controls from BIOS(or equivalent)
+   to Linux kernel. 
+
+
+#. **kernel (C & assembly)** - again probes all connected hardware and initializes 
+   them systematically. At the end of the kernel stage, it calls *init* process
+   from filesystem to initialize user space scripts and startup jobs. 
+
+#. **initrd (initial ramdisk)** - is an optional stage. It is mostly used in modern desktops to initialize
+   hardwares whose drivers are stored in filesystem. As the kernel modules(.ko files) are available in file system 
+   (/lib/modules/), 
+
+#. **file-system** - 
+
+Setting up toolchain for embedded Linux development
+---------------------------------------------------
 
 
 
