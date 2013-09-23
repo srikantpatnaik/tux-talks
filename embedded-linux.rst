@@ -329,14 +329,14 @@ Show the hexdump and offsets
 
 #. To make kernel modules ::
         
-        make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- \
+        make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- \ 
         INSTALL_MOD_PATH=out modules
 
 
 #. To install modules in right path ::
 
-		make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=out\
- 		modules_install
+		make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=out \
+   	   	modules_install
 
 
 #.  After successful compilation ``uImage`` will be available at ``arch/arm/boot/uImage`` and
@@ -487,7 +487,7 @@ desktop enviroment.
 	deb-src http://ports.ubuntu.com/ubuntu-ports/ saucy main universe
 	deb-src http://ports.ubuntu.com/ubuntu-ports/ saucy multiverse restricted
 
-#. Now set up chroot environment ::
+#. Now set up chroot environment manually or use the script given two steps below::
 
 	sudo mount -t proc /proc /media/<ext4 partion of sdcard>/proc
 
@@ -510,7 +510,7 @@ desktop enviroment.
    here onwards we will use this script to mount and un-mount
    fs. Please read this script to get any further help ::
 
-	sudo ch-mount.sh -m /media/<ext4 partition of sdcard>/
+	sudo bash ch-mount.sh -m /media/<ext4 partition of sdcard>/
 
 #. Now we have a chroot environment with all ``proc, dev, sys, dev/pts`` mounted,
    so run update to fetch repository informations (as chroot has root prompt so
@@ -551,13 +551,8 @@ desktop enviroment.
          
 #. Add user and set permissions ::
 
-	# adduser aakash
-
-	# addgroup aakash adm
- 	
-	# addgroup aakash sudo
-
-	# addgroup aakash audio
+    adduser aakash && addgroup aakash adm && addgroup aakash sudo && \ 
+    addgroup aakash audio
 
 #. Open ``/etc/hostname`` file in vim.tiny editor and give a hostname, for example
    write ``aakash-arm``
@@ -617,7 +612,7 @@ desktop enviroment.
    ``exit`` in chroot environment to get back to Ubuntu x86 host prompt, now
    run un-mount script ::
 
-	sudo ch-mount.sh -u /media/<ext4 partition of sdcard>/
+	sudo bash ch-mount.sh -u /media/<ext4 partition of sdcard>/
 
    unmount both the partitions (fat32 and ext4) from your machine, confirm with
    ``mount`` command to check nothing from sdcard is mounted
