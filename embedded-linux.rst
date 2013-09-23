@@ -37,7 +37,8 @@ are embedded in one IC(integrated circuit), also known as System on Chip(SoC).
 Why Embedded Linux ?
 ~~~~~~~~~~~~~~~~~~~~
 
-* Linux is a free software(free as freedom), it supports large variants of embedded processors.
+* Linux is a free software(free as freedom), it supports large variants of 
+  embedded processors.
 
 * Linux can be optimized to run on any low profile hardware(with 5MB ROM/RAM),
   as resources can be easily configured using userspace scripts. 
@@ -125,10 +126,12 @@ TI                 Omap 4              KindleFire,GalaxyTab 2,Blackberry Playboo
 TI                 Omap 5              NA                                                Cortex-A15, 2 
 ==============   ==================   =============================================  ======================
 
+|
+
 Boot sequence in Linux
 ----------------------
 
-The steps involved in Linux boot process (x86 and ARM) :
+**The steps involved in Linux boot process (x86 and ARM) :**
 
 
 1. **BIOS (assembly & C)** - is the first program run by x86 based motherboard. ARM boards do 
@@ -146,40 +149,149 @@ The steps involved in Linux boot process (x86 and ARM) :
    location. GRUB(GRand Unified Bootloader) is the popular bootloader for desktop 
    Linux machines. 
 
-   Embedded Linux use `U-Boot <http://www.denx.de/wiki/U-Boot/>`_ bootloader.
-
-   The purpose of this stage is to hand over hardware controls from BIOS(or equivalent)
-   to Linux kernel. 
-
+   Embedded Linux uses `U-Boot <http://www.denx.de/wiki/U-Boot/>`_ bootloader.
 
 #. **kernel (C & assembly)** - again probes all connected hardware and initializes 
    them systematically. At the end of the kernel stage, it calls *init* process
    from filesystem to initialize user space scripts and startup jobs. 
 
-#. **initrd (initial ramdisk)** - is an optional stage. It is mostly used in modern desktops to initialize
-   hardwares whose drivers are stored in filesystem. As the kernel modules(.ko files) are available in file system 
-   (/lib/modules/), 
+#. **initrd (initial ramdisk)** - is an optional scheme for loading a temporary 
+   root file system containing device drivers into memory in the boot process of 
+   the Linux kernel. 
 
-#. **file-system** - 
+#. **file-system** - is the last stage of boot process, it contains *glibc* and 
+   other architecture specific shared libraries to run user space applications. 
 
-Setting up toolchain for embedded Linux development
----------------------------------------------------
+   Filesystem optionally may contains X-server which provides graphical desktop
+   environment such as GNOME, KDE etc. 
+
+|
+
+Setting up development environment
+----------------------------------
+
+Software requirements
+~~~~~~~~~~~~~~~~~~~~~
+
+#. In Ubuntu 12.04+, issue the below command to install cross compiler ::
+
+	sudo apt-get install gcc-arm-linux-gnueabihf
+
+#. Install dependencies for kernel and u-boot compilation ::
+
+	sudo apt-get install build-essential dpkg-dev kernel-wedge make automake\
+    	checkinstall git u-boot-tools
+
+#. Install ``qemu-user-static`` for setting up chroot based ARM virtualization to
+   install packages in ARM-fileystem ::
+
+	sudo apt-get install qemu-user-static
+
+#. If you have serial console (Rx, Tx) lines from the board/tablet, then to  
+   view console output install *minicom* (optional) ::
+
+	sudo apt-get install minicom
 
 
+Hardware requirements
+~~~~~~~~~~~~~~~~~~~~~
+
+#. A development board such as R-pi, beagleboard, cubieboard or Aakash tablet
+
+#. An sdcard of 2 GB or above
+
+#. USB hub, keyboard and mouse (optional)
+
+#. Serial(Rx,Tx) cable, and USB to serial convertor (optional, for debugging)  
+
+|
 
 
+Preparing U-boot, kernel & filesystem 
+-------------------------------------
+
+At the end of this stage you will have a bootable sdcard with your custom
+embedded Linux.
+
+For those who want to try Linux on Aakash now, can download this sdcard image. 
 
 
-U-Boot
-------
+U-Boot for embedded boards
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Compiling U-boot
+^^^^^^^^^^^^^^^^
+
+1. Clone the repository by ::
+    
+        git clone -b sunxi https://github.com/androportal/uboot-allwinner.git --depth=1
+
+
+#. ``cd`` into ``uboot-allwinner`` ::
+
+        cd uboot-allwinner
+
+#.  To compile uboot issue::
+
+        make a13_olinuxino CROSS_COMPILE=arm-linux-gnueabihf-
+
+
+#.  After successful compilation ``u-boot.bin`` will be available at root of the
+    directory and ``sunxi-spl.bin`` will be in ``spl`` directory
+    
+
+
+Writing U-boot on sdcard
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+1. Insert ``sdcard`` in card reader or MMC reader available in laptops/netbooks
+
+
+#. Backup all your sdcard data, and issue the following commands carefully, replace 
+   *X* in /dev/sdX with suitable letter(a lower case alphabet) alloted for your
+   sdcard, remember *X* will never be *a* if you have a hard disk installed, so keep
+   in mind it must be something like ``/dev/sdb`` or ``/dev/sdc`` etc. Please check
+   twice and if you are still unsure then do not perform these steps ::
+
+        sudo fdisk -u=sectors /dev/sdX
+
+#. First clear the previous u-boot and its configurations, if any::
+
+		sudo dd if=/dev/zero of=/dev/sdX bs=1024 seek=544 count=128
+
+#. Now from same ``uboot-allwinner`` directory issue these commands, again replace 
+   X with suitable value, now to write ``sunxi-spl.bin`` to sdcard issue::
+
+        sudo dd if=spl/sunxi-spl.bin of=/dev/sdX bs=1024 seek=8
+
+   Similarly to burn ``u-boot.bin`` issue ::
+
+        sudo dd if=u-boot.bin of=/dev/sdX bs=1024 seek=32
+
+At this point we have a bootable sdcard readly. Get kernel and rootfs to make a usuable
+Linux for your tablet.
+
 
 
 Kernel
-------
+~~~~~~
 
 Show the hexdump and offsets
 
 
 Filesystem
-----------
+~~~~~~~~~~
+
+Debugging 
+---------
+
+Serial monitor using minicom
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Image with connections (from net) also Aakash connections (if required)
+
+Screenshots with uboot running on Aakash (white background)
+
+
+
 
