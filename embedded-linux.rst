@@ -485,10 +485,14 @@ Filesystem
 
 As of now we have uboot and kernel ready, the next step is to run applications, to
 do so we need Linux file system. One can use any distribuition from here after.
-For this session we will use ubuntu 13.10 daily build. 
+For this session we will use ubuntu 13.10 daily build. You can upgrade to stable
+13.10 later. 
 
 We will use LXDE, as it is almost 50% lighter & twice as faster than any other 
-desktop enviroment.
+desktop environment.
+
+Setting up ARM chroot 
+^^^^^^^^^^^^^^^^^^^^^
 
 #. Insert sdcard again, download the core ubuntu 13.10 image from this `link <http://cdimage.ubuntu.com/ubuntu-core/daily/current/saucy-core-armhf.tar.gz>`_ and save it in say `/tmp` directory. Extract the tar file in your sdcard's ext4 partition ::
 	
@@ -500,19 +504,10 @@ desktop enviroment.
 
 	sudo tar -xvpzhf /tmp/saucy-core-armhf.tar.gz
 
-
-
-#. Copy the static qemu binary to mount arm fs in x86 architecture without invoking actual qemu emulator::
+#. Copy the static qemu binary to mount arm fs in x86 architecture without invoking actual qemu emulator ::
 
 	sudo cp /usr/bin/qemu-arm-static /media/<ext4 partion of sdcard>/usr/bin/
 
-#. Open ``/media/<ext4 partition of sdcard>/etc/apt/sources.list`` in text\
-   editor and add ``universe`` & ``multiverse`` ::
-
-	deb http://ports.ubuntu.com/ubuntu-ports/ saucy main universe
-	deb http://ports.ubuntu.com/ubuntu-ports/ saucy multiverse restricted
-	deb-src http://ports.ubuntu.com/ubuntu-ports/ saucy main universe
-	deb-src http://ports.ubuntu.com/ubuntu-ports/ saucy multiverse restricted
 
 #. Now set up chroot environment manually or use the `ch-mount.sh` bash 
    script given two steps below ::
@@ -540,11 +535,23 @@ desktop enviroment.
 
 	sudo bash ch-mount.sh -m /media/<ext4 partition of sdcard>/
 
+Updating and installing packages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 #. Now we have a chroot environment with all ``proc, dev, sys, dev/pts`` mounted,
    so run update to fetch repository informations (as chroot has root prompt so
    no need to write sudo anymore) ::
 
 	apt-get update
+
+#. Open ``/media/<ext4 partition of sdcard>/etc/apt/sources.list`` in text\
+   editor and replace the content with following ::
+
+	deb http://ports.ubuntu.com/ubuntu-ports/ saucy main universe
+	deb http://ports.ubuntu.com/ubuntu-ports/ saucy multiverse restricted
+	deb-src http://ports.ubuntu.com/ubuntu-ports/ saucy main universe
+	deb-src http://ports.ubuntu.com/ubuntu-ports/ saucy multiverse restricted
+
 
 #. Now install english language pack to avoid locale related errors ::
 
@@ -576,7 +583,9 @@ desktop enviroment.
 
 	dpkg -i gnoduino_0.4.0-0pmjdebruijn4~precise_all.deb
 	
-         
+User permissions and startup jobs         
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 #. Add user and set permissions ::
 
     adduser aakash && addgroup aakash adm && addgroup aakash sudo && \ 
@@ -592,12 +601,12 @@ desktop enviroment.
 
 #. Open ``/etc/modules`` file and append these two lines ::
 
-	gt811_ts
+    gt811_ts
     ft5x_ts
     ektf2k
-	8192cu
+    8192cu
 
-#. Add these lines in ``/etc/rc.local`` to activate swap at boot time::
+#. Add these lines in ``/etc/rc.local`` to activate swap at boot time(if using)::
 
 	# Added for Aakash, assuming the last partition will be swap 
 	mkswap /dev/mmcblk0p3
@@ -647,16 +656,104 @@ desktop enviroment.
    unmount both the partitions (fat32 and ext4) from your machine, confirm with
    ``mount`` command to check nothing from sdcard is mounted
 
-#. Remove the sdcard and insert it in your tablet, power on to get ubuntu 13.10 lxde desktop
+Remove the sdcard and insert it in your tablet, power on to get ubuntu 13.10 lxde desktop
+
 
 Debugging 
 ---------
 
-Serial monitor using minicom
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+U-boot access using minicom
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Image with connections (from net) also Aakash connections (if required)
+``Minicom`` is a serial communication program, its used to access serial console 
+at certain baudrate us Rx & Tx lines. The serial console redirects the output
+of embedded Linux device to minicom. Mostly embedded devices do not have display
+units, hence serial debugging is one of the widely used practice. 
 
-Screenshots with uboot running on Aakash (white background)
+Minicom setup
+^^^^^^^^^^^^^
+
+Set the proper baud rate and port. The baud rate could be ``115200`` in most cases,
+if not check the manual of the SoC. 
+
+Run ::
+
+	sudo minicom -s
+
+and then navigate to ``Serial port setup`` and change settings to match as shown below,
+hit enter to exit, then ``Save setup as dfl``.
+
+.. image:: data/minicom-setup.png                                               
+      :width: 100%
+
+Connect Rx, Tx lines to your embedded board and other end to your host laptop/desktop. 
+
+.. image:: data/aakash-serial.jpg                                               
+      :width: 100%
+
+|
+
+Now run ::
+
+	minicom
+
+and you should see scrolling U-boot and kernel logs. By default U-boot waits 
+for user interrupt for 3 seconds. If interrupted it will drop into U-boot prompt, similar
+to this
+
+.. image:: data/uboot-prompt.png                                               
+      :width: 100%
+
+You can type ``help`` to see all `U-boot` commands. 
+
+To print default U-boot environment variables ::
+
+	printenv
+
+.. image:: data/printenv.png                                                
+      :width: 100%
+
+|
+
+U-boot prompt can allow user to update kernel, load alternate kernel images, 
+change the environment variables and lot more. 
+
+Now to ``boot`` the kernel from U-boot prompt just run ::
+
+	boot
+
+This will boot the default kernel set in U-boot environment. 
+
+Kernel debugging
+~~~~~~~~~~~~~~~~
+
+The kernel logs can be viewed in same minicom serial console. The logs provide
+important information about services and drivers. One can set loglevel to control
+the extent of debug info on screen. 
+
+Developers usually insert ``printk`` statements in device drivers and check values of 
+variables in kernel log. The better and efficient way to debug kernel is by using
+``kdb``. More on kdb can be found `here <https://www.kernel.org/pub/linux/kernel/people/jwessel/kdb/>`_
+
+
+Additional tools to make life easy
+----------------------------------
+
+ssh & scp
+~~~~~~~~~
+
+Setup an ssh server in your embedded Linux box and add your public key to have
+password less login (helps to load kernel images and modules faster)
+
+tftp server
+~~~~~~~~~~~
+
+If your board supports ethernet cable then use this setup to transfer test builds. 
+
+
+
+
+
+
 
 
