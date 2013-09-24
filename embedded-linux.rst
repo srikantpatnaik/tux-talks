@@ -216,7 +216,13 @@ embedded Linux.
 For those who want to try Linux on Aakash now, can download this sdcard 
 `image <http://www.it.iitb.ac.in/AakashApps/repo/GNU-Linux-on-Aakash/13.10_2GB_24_09_2013.img.bz2>`_
 
-Untar the file and ``dd`` it to sdcard. 
+Insert the sdcard and umount ::
+
+	umount /dev/sdX
+
+Untar the file and ``dd`` it to sdcard ::
+
+	sudo dd if=13.10_2GB_24_09_2013.img of=/dev/sdX bs=1M count=2048
 
 
 U-Boot 
