@@ -213,7 +213,10 @@ Preparing U-boot, kernel & filesystem
 At the end of this stage you will have a bootable sdcard with your custom
 embedded Linux.
 
-For those who want to try Linux on Aakash now, can download this sdcard image. 
+For those who want to try Linux on Aakash now, can download this sdcard 
+`image <http://www.it.iitb.ac.in/AakashApps/repo/GNU-Linux-on-Aakash/13.10_2GB_24_09_2013.img.bz2>`_
+
+Untar the file and ``dd`` it to sdcard. 
 
 
 U-Boot 
