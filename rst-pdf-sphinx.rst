@@ -157,6 +157,10 @@ Let's save the above file as **sample.rst**, and convert it to pdf as ::
 
 	rst2pdf sample.rst -o sample.pdf
 
+To convert with custom font ::
+
+	rst2pdf -s freetype-serif sample.rst -o sample.pdf
+
 Now the converted `pdf` will look like
 
 .. image:: data/sample-rst2pdf.png
