@@ -656,6 +656,7 @@ User permissions and startup jobs
    and create a directory as ``/lib/firmware/rtlwifi`` in ubuntu chroot, copy
    ``rtl8192cufw.bin`` inside ``rtlwifi`` directory
 
+
 #. By now we have basic elements set to give a trial run to our OS. Type
    ``exit`` in chroot environment to get back to Ubuntu x86 host prompt, now
    run un-mount script ::
@@ -665,7 +666,13 @@ User permissions and startup jobs
    unmount both the partitions (fat32 and ext4) from your machine, confirm with
    ``mount`` command to check nothing from sdcard is mounted
 
-Remove the sdcard and insert it in your tablet, power on to get ubuntu 13.10 lxde desktop
+Remove the sdcard and insert it in your tablet, power on to get ubuntu 13.10 lxde desktop.
+
+The default login is ``aakash``. If you unable to `logout` or `shutdown`,
+then you must set the following as root ::
+
+	chmod u+s /usr/bin/lxsession-logout
+
 
 
 Debugging 
