@@ -7,6 +7,12 @@
 
 #. Change document root to `/var/www/thelinuxacademy` instead of `var/www/` in both places
 
+	and `cgi` path also appropriately similar to ::
+
+	ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+    ScriptAlias /register.cgi /var/www/thelinuxacademy/register.cgi
+
+
 #. Execute as root ::
 		
 	 a2enmod include
