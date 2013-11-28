@@ -188,6 +188,24 @@ APIs and shortcuts of web2py
 	
 	{{=A(row.user_id, _href=URL('access', args=[row.user_id]))}}	
 
+#. To add new theme/template, move the new `index.html` to `views/layout.html` and substitute
+   the css & js paths with web2py functions ::
+
+                                                                          
+     {{response.files.insert(0,URL('static','css_template/js/jquery.min.js'))                       
+	 response.files.insert(1,URL('static','css_template/js/config.js'))                
+	 response.files.insert(2,URL('static','css_template/js/skel.min.js'))          
+	 response.files.insert(3,URL('static','css_template/js/skel-panels.min.js'))             
+                                                                                
+	 response.files.insert(4,URL('static','css_template/css/skel-noscript.css'))                
+	 response.files.insert(5,URL('static','css_template/css/style.css'))           
+	 response.files.insert(6,URL('static','css_template/css/style-desktop.css'))             
+    }} 
+
+   Also change the path of static images/page links(if any) with `URL` ::
+
+	<li><a href="{{=URL('static','css_template/threecolumn1.html')}}">Three Column #1</a></li>
+  
 A simple example (Adding two numbers using a form)
 --------------------------------------------------
 
