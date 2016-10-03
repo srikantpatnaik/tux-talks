@@ -11,11 +11,9 @@ ReStructured Text, export to pdf and html(sphinx)
    PageBreak oneColumn
 
 .. footer::
-   
-   Page: ###Page###/###Total###,
-   Android workshop, Saturday 2nd March 2013, IIT Bombay 
 
-|
+	Page: ###Page###/###Total###, Summer internship training program,Wednesday 14 May 2014,IIT Bombay
+
 |
 
 Why Documentation?
