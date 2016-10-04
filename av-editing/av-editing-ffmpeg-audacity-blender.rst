@@ -1,23 +1,22 @@
 ========================================================
-Audio-Video editing using FFmpeg, sox, Blender, Audacity
+AV editing using FFmpeg, sox, Blender, Audacity
 ========================================================
 
-.. contents::
+.. .. contents::
 
-.. section-numbering::
+.. .. section-numbering::
 
-.. raw:: pdf
+.. .. raw:: pdf
 
-   PageBreak oneColumn
+..   PageBreak oneColumn
 
-.. footer::
+.. .. footer::
 
-	Page: ###Page###/###Total###
+..	Page: ###Page###/###Total###
 
-|
 
-Introduction to media files
----------------------------
+Brief introduction to digital media
+-----------------------------------
 
 Digital Audio/Video
 ~~~~~~~~~~~~~~~~~~~
@@ -56,12 +55,11 @@ process based on factors such as end user, bandwidth, quality, cost etc.
 Few popular codecs are h264, vp8, lame, DivX etc. 
 Find more at this `wiki page. <https://en.wikipedia.org/wiki/List_of_open-source_codecs>`_
 
-.. figure:: data/containers.png
+.. figure:: ../data/containers.png
    :scale: 80%	
-   :name: my picture
    :align: center
 
-   `source <http://blog.gramant.com/wp-content/uploads/2013/10/container.png>`_
+   MP4 container holding audio, video, and metadata `image source <http://blog.gramant.com/wp-content/uploads/2013/10/container.png>`_
 
 FFmpeg
 ------
@@ -71,6 +69,18 @@ stream audio and video data.
 There are several projects which use **FFmpeg** in backend, an extensive list 
 can be found `here.  <https://trac.ffmpeg.org/wiki/Projects>`_
 
+.. figure:: ../data/ffmpeg-bd.png
+   :scale: 80%	
+   :align: center
+
+   FFmpeg block diagram 
+
+FFmpeg quick help
+~~~~~~~~~~~~~~~~~
+
+Frequently used command line arguments 
+
+``-i`` ``input file``
 
 Suggested readings and credits
 ------------------------------
