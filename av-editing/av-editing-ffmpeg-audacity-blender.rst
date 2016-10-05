@@ -78,9 +78,68 @@ can be found `here.  <https://trac.ffmpeg.org/wiki/Projects>`_
 FFmpeg quick help
 ~~~~~~~~~~~~~~~~~
 
-Frequently used command line arguments 
+Frequently used command line arguments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``-i`` ``input file``
+* ``-i`` ``input file``
+* ``-f`` ``force format``
+* ``-r`` ``frame per second``
+* ``-vcodec or -c:v`` ``video codec``
+* ``-acodec or -c:a`` ``audio codec``
+* ``-vb`` ``video bitrate`` 
+* ``-ab`` ``audio bitrate``
+* ``-vf`` ``video filter``
+* ``-af`` ``audio filter``
+* ``-q:v`` ``video quality`` (1 highest, 31 poorest) more details on quality `here. <http://slhck.info/video-encoding.html>`_
+
+
+Size reduction by either reducing the video resolution or by lowering bit rate
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To check the bit rate, codec, frame rate info ::
+
+	ffmpeg -i sample-video.mp4
+
+Size reduction by restricting bandwidth ::
+
+	ffmpeg -i sample-video.mp4 -vb 500k -c:a copy reduced_vb.mp4 
+
+Size reduction by scaling down ::
+
+	ffmpeg -i sample-video.mp4 -c:a copy -vf scale=640:360 reduced_scale.mp4
+
+Joining media files
+~~~~~~~~~~~~~~~~~~~
+
+It is easier to concatenate less compressed files, H.264 and modern codecs 
+are highly compact and complicated, however, it is possible to concantinate
+them using advance options in ``FFmpeg``. 
+We will use the more widely used approach where we will convert 
+complex codecs to a simpler one's.
+
+Let us convert ``sample-video.mp4`` to ``sample-video.mpg`` ::
+
+	ffmpeg -i sample-video.mp4 -q:v 2 sample-video.mpg
+
+Please note, we haven't mentioned target codec, ffmpeg choose the best codec
+for the ``mpg`` container. Once converted we can verify ::
+
+	ffmpeg -i sample-video.mpg
+
+By the way, the ``-q:v 2`` factor is chosen for best results. It can also be done
+with ``-vb`` flag. Also, note the size and bandwidth for the ``mpg`` file due 
+to its poor compression. 
+
+Let us join videos ::
+
+	ffmpeg -i "concat:sample-video.mpg|sample-video.mpg" -c copy output.mpg
+
+More on concatenation at ``https://trac.ffmpeg.org/wiki/Concatenate``
+
+Muxing/Demuxing (splitting and joining)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
 Suggested readings and credits
 ------------------------------
